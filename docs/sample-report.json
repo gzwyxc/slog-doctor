@@ -1,0 +1,366 @@
+{
+  "inputs": [
+    {
+      "format": "slog2",
+      "lines": 93,
+      "parsed": 93,
+      "skipped": 0,
+      "name": "qnx-crashloop-slog2.txt"
+    }
+  ],
+  "total_events": 93,
+  "problem_events": 15,
+  "severities": {
+    "CRITICAL": 4,
+    "ERROR": 11,
+    "WARNING": 26,
+    "INFO": 46,
+    "DEBUG": 6
+  },
+  "findings": [
+    {
+      "kind": "restart-loop",
+      "title": "Restart loop: telemetryd crashed 4 times",
+      "detail": "telemetryd crashed 4 times in this log window. A supervisor such as the High Availability Manager (HAM) is restarting it, but the root cause is unfixed -- the system is running without this service for part of every cycle.",
+      "action": "Treat the *first* crash of the process as the real bug and fix that crash; do not just tune the supervisor's restart policy -- that only hides the fault."
+    },
+    {
+      "kind": "burst",
+      "title": "Event burst at 08:06",
+      "detail": "25 events in one minute vs an average of 8.5/min (3 of them errors). Bursts like this usually mark the moment a failure cascaded -- start the investigation at this timestamp.",
+      "action": null
+    },
+    {
+      "kind": "pattern",
+      "title": "Message sent to a process that no longer exists (ESRCH) (x6)",
+      "detail": "In QNX native message passing, MsgSend() returned ESRCH: the destination process (or its channel) was gone when the client tried to send. Typically the server crashed or restarted and the client kept a stale connection id (coid).",
+      "action": "Check whether the destination process crashed just before these errors (look for a crash cluster at the same timestamp). Clients should re-attach (name_open/ConnectAttach) when a server restarts instead of caching the coid forever."
+    },
+    {
+      "kind": "pattern",
+      "title": "Storage (CAM/devb) error (x2)",
+      "detail": "The block driver stack (devb-* / CAM) reported a storage error: command timeouts, resets or media errors. Repeated errors point at failing media or a cabling/power problem rather than software.",
+      "action": "Check the same device for escalating error counts, run the drive's SMART/health check, and plan media replacement if errors cluster on one device."
+    }
+  ],
+  "clusters": [
+    {
+      "signature": "MsgSend to telemetryd failed: ESRCH (no such process), stale coid #",
+      "count": 6,
+      "problems": 6,
+      "worst_severity": "ERROR",
+      "sources": {
+        "dashd": 6
+      },
+      "explanation": "Message sent to a process that no longer exists (ESRCH)"
+    },
+    {
+      "signature": "telemetryd terminated: SIGSEGV (signal #), fault address #",
+      "count": 4,
+      "problems": 4,
+      "worst_severity": "CRITICAL",
+      "sources": {
+        "telemetryd": 4
+      },
+      "explanation": "Process crashed with a segmentation fault"
+    },
+    {
+      "signature": "CAM error: ata command timeout on device #, retry # of #",
+      "count": 2,
+      "problems": 2,
+      "worst_severity": "ERROR",
+      "sources": {
+        "devb-eide": 2
+      },
+      "explanation": "Storage (CAM/devb) error"
+    },
+    {
+      "signature": "Sensor read failed on channel #, marking channel offline",
+      "count": 2,
+      "problems": 2,
+      "worst_severity": "ERROR",
+      "sources": {
+        "telemetryd": 2
+      },
+      "explanation": null
+    },
+    {
+      "signature": "CAM error: device reset issued for device #",
+      "count": 1,
+      "problems": 1,
+      "worst_severity": "ERROR",
+      "sources": {
+        "devb-eide": 1
+      },
+      "explanation": "Storage (CAM/devb) error"
+    },
+    {
+      "signature": "ham: entity telemetryd condition failed, restarting process telemetryd",
+      "count": 4,
+      "problems": 0,
+      "worst_severity": "WARNING",
+      "sources": {
+        "ham": 4
+      },
+      "explanation": "HAM restarted a failed process"
+    },
+    {
+      "signature": "watchdog: no unexpected inactivity, system healthy",
+      "count": 1,
+      "problems": 0,
+      "worst_severity": "WARNING",
+      "sources": {
+        "watchdog": 1
+      },
+      "explanation": "Watchdog timeout / system inactivity"
+    },
+    {
+      "signature": "io-pkt: link down on emac0",
+      "count": 7,
+      "problems": 0,
+      "worst_severity": "WARNING",
+      "sources": {
+        "io-pkt-v6-hc": 7
+      },
+      "explanation": "Network link state change (io-pkt)"
+    },
+    {
+      "signature": "io-pkt: link up on emac0, # Mbps full duplex",
+      "count": 7,
+      "problems": 0,
+      "worst_severity": "INFO",
+      "sources": {
+        "io-pkt-v6-hc": 7
+      },
+      "explanation": "Network link state change (io-pkt)"
+    },
+    {
+      "signature": "io-pkt started, loading emac driver",
+      "count": 1,
+      "problems": 0,
+      "worst_severity": "INFO",
+      "sources": {
+        "io-pkt-v6-hc": 1
+      },
+      "explanation": "Network link state change (io-pkt)"
+    },
+    {
+      "signature": "link up on emac0, # Mbps full duplex",
+      "count": 1,
+      "problems": 0,
+      "worst_severity": "INFO",
+      "sources": {
+        "io-pkt-v6-hc": 1
+      },
+      "explanation": "Network link state change (io-pkt)"
+    },
+    {
+      "signature": "Sensor sweep complete, # channels nominal",
+      "count": 8,
+      "problems": 0,
+      "worst_severity": "INFO",
+      "sources": {
+        "telemetryd": 8
+      },
+      "explanation": null
+    },
+    {
+      "signature": "Display refresh rate nominal",
+      "count": 6,
+      "problems": 0,
+      "worst_severity": "INFO",
+      "sources": {
+        "dashd": 6
+      },
+      "explanation": null
+    },
+    {
+      "signature": "Sensor read timeout on channel #, retrying",
+      "count": 6,
+      "problems": 0,
+      "worst_severity": "WARNING",
+      "sources": {
+        "telemetryd": 6
+      },
+      "explanation": null
+    },
+    {
+      "signature": "telemetryd 2.4.1 started, attached to /dev/telemetry",
+      "count": 5,
+      "problems": 0,
+      "worst_severity": "INFO",
+      "sources": {
+        "telemetryd": 5
+      },
+      "explanation": null
+    },
+    {
+      "signature": "Heartbeat check passed for all entities",
+      "count": 5,
+      "problems": 0,
+      "worst_severity": "DEBUG",
+      "sources": {
+        "ham": 5
+      },
+      "explanation": null
+    },
+    {
+      "signature": "Sensor channel # slow to respond, # ms",
+      "count": 5,
+      "problems": 0,
+      "worst_severity": "WARNING",
+      "sources": {
+        "telemetryd": 5
+      },
+      "explanation": null
+    },
+    {
+      "signature": "NTP sync complete, offset # ms",
+      "count": 4,
+      "problems": 0,
+      "worst_severity": "INFO",
+      "sources": {
+        "io-pkt-v6-hc": 4
+      },
+      "explanation": null
+    },
+    {
+      "signature": "Telemetry data stale, showing last known values",
+      "count": 3,
+      "problems": 0,
+      "worst_severity": "WARNING",
+      "sources": {
+        "dashd": 3
+      },
+      "explanation": null
+    },
+    {
+      "signature": "Filesystem check passed on /data",
+      "count": 2,
+      "problems": 0,
+      "worst_severity": "INFO",
+      "sources": {
+        "devb-eide": 2
+      },
+      "explanation": null
+    },
+    {
+      "signature": "User input received, page switch",
+      "count": 2,
+      "problems": 0,
+      "worst_severity": "INFO",
+      "sources": {
+        "dashd": 2
+      },
+      "explanation": null
+    },
+    {
+      "signature": "System startup: QNX OS 8.0.0, microkernel initialized",
+      "count": 1,
+      "problems": 0,
+      "worst_severity": "INFO",
+      "sources": {
+        "procnto": 1
+      },
+      "explanation": null
+    },
+    {
+      "signature": "Scheduler started on # CPUs, priority inheritance enabled",
+      "count": 1,
+      "problems": 0,
+      "worst_severity": "INFO",
+      "sources": {
+        "procnto": 1
+      },
+      "explanation": null
+    },
+    {
+      "signature": "Mounting filesystems from build image",
+      "count": 1,
+      "problems": 0,
+      "worst_severity": "INFO",
+      "sources": {
+        "startup": 1
+      },
+      "explanation": null
+    },
+    {
+      "signature": "slogger2 started, buffer set 'system' # KB",
+      "count": 1,
+      "problems": 0,
+      "worst_severity": "INFO",
+      "sources": {
+        "slog2": 1
+      },
+      "explanation": null
+    }
+  ],
+  "timeline": [
+    {
+      "minute": "2026-11-25T08:00:00",
+      "total": 10,
+      "problems": 0,
+      "burst": false
+    },
+    {
+      "minute": "2026-11-25T08:01:00",
+      "total": 5,
+      "problems": 0,
+      "burst": false
+    },
+    {
+      "minute": "2026-11-25T08:02:00",
+      "total": 5,
+      "problems": 0,
+      "burst": false
+    },
+    {
+      "minute": "2026-11-25T08:03:00",
+      "total": 7,
+      "problems": 1,
+      "burst": false
+    },
+    {
+      "minute": "2026-11-25T08:04:00",
+      "total": 7,
+      "problems": 3,
+      "burst": false
+    },
+    {
+      "minute": "2026-11-25T08:05:00",
+      "total": 8,
+      "problems": 4,
+      "burst": false
+    },
+    {
+      "minute": "2026-11-25T08:06:00",
+      "total": 25,
+      "problems": 3,
+      "burst": true
+    },
+    {
+      "minute": "2026-11-25T08:07:00",
+      "total": 6,
+      "problems": 0,
+      "burst": false
+    },
+    {
+      "minute": "2026-11-25T08:08:00",
+      "total": 7,
+      "problems": 3,
+      "burst": false
+    },
+    {
+      "minute": "2026-11-25T08:09:00",
+      "total": 5,
+      "problems": 0,
+      "burst": false
+    },
+    {
+      "minute": "2026-11-25T08:10:00",
+      "total": 8,
+      "problems": 1,
+      "burst": false
+    }
+  ]
+}

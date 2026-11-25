@@ -1,0 +1,41 @@
+TRACEPRINTER version 1.02
+TRACEPARSER LIBRARY version 1.02
+HEADER FILE: /boot/sys/procnto.h
+TRACE FILE NAME: trace-2026-11-25.kev
+TRACE DATE: Nov 25 2026
+TRACE KERNEL: QNX 8.0.0 procnto-smp
+
+    TIMESTAMP     CPU    EVENT           OWNER       DATA
+---------------   ---    -----           -----       ----
+   0.000000000    0  SYSTEM            0/1         BOOTSTRAP COMPLETE
+   0.000120400    0  PROCESS           0/1         CREATE telemetryd pid 6010
+   0.000231900    1  THREAD            6010/1      RUNNING
+   0.000312750    1  THREAD            6010/1      READY
+   0.000402110    0  KERCALL           6010/1      MSGSEND to 6020
+   0.000512300    0  THREAD            6020/1      RUNNING
+   0.000640020    1  THREAD            6010/2      RECEIVE BLOCKED
+   0.000755480    2  INTR              0/44        ATTACH vector 44
+   0.000901260    2  THREAD            6010/1      RUNNING
+   0.001020340    3  THREAD            6010/1      REPLY BLOCKED
+   0.001133900    3  THREAD            6020/1      RUNNING
+   0.001260010    0  SYSTEM            0/1         TIME SYNC
+  12.450010200    1  THREAD            6010/1      RUNNING
+  12.450133400    1  KERCALL           6010/1      MSGSENDV to resmgr
+  12.450299800    2  THREAD            4100/3      RUNNING
+  12.450512600    2  THREAD            6010/1      RECEIVE BLOCKED
+  45.900002300    0  INTR              0/44        ATTACH vector 44
+  45.900140700    0  THREAD            6010/2      RUNNING
+  45.900311200    1  THREAD            6010/2      RUNNING
+  83.540000000    1  PROCESS           6010/1      telemetryd DESTROYED (signal 11)
+  83.540120500    0  PROCESS           0/1         CREATE telemetryd pid 6112
+  83.540300900    1  THREAD            6112/1      RUNNING
+  83.540455100    1  KERCALL           6020/1      MSGSEND ESRCH
+  83.540590200    0  THREAD            6020/1      RUNNING
+ 151.020000000    2  PROCESS           6112/1      telemetryd DESTROYED (signal 11)
+ 151.020134000    0  PROCESS           0/1         CREATE telemetryd pid 6230
+ 151.020300000    2  THREAD            6230/1      RUNNING
+ 151.020512000    1  THREAD            6230/2      RECEIVE BLOCKED
+ 220.700000000    3  INTR              0/27        ATTACH vector 27
+ 220.700150000    3  THREAD            5100/4      RUNNING
+ 220.700320000    3  THREAD            5100/4      READY
+ 300.000000000    0  SYSTEM            0/1         IDLE BALANCE

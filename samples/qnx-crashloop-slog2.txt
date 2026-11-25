@@ -1,0 +1,93 @@
+Nov 25 08:00:01.012 qnx-target procnto[1]: 5: System startup: QNX OS 8.0.0, microkernel initialized
+Nov 25 08:00:01.210 qnx-target procnto[1]: 5: Scheduler started on 4 CPUs, priority inheritance enabled
+Nov 25 08:00:01.455 qnx-target startup[1]: 5: Mounting filesystems from build image
+Nov 25 08:00:02.003 qnx-target slog2[2211]: 5: slogger2 started, buffer set 'system' 512 KB
+Nov 25 08:00:02.340 qnx-target devb-eide[4100]: 5: eide controller at 0x1f0, disk detected: 32768 MB
+Nov 25 08:00:03.102 qnx-target io-pkt-v6-hc[5100]: 5: io-pkt started, loading emac driver
+Nov 25 08:00:03.560 qnx-target io-pkt-v6-hc[5100]: 5: link up on emac0, 1000 Mbps full duplex
+Nov 25 08:00:04.010 qnx-target ham[3300]: 5: High Availability Manager started, 6 entities registered
+Nov 25 08:00:04.400 qnx-target telemetryd[6010]: 5: telemetryd 2.4.1 started, attached to /dev/telemetry
+Nov 25 08:00:04.720 qnx-target dashd[6020]: 5: dashd started, connected to telemetryd via name_open
+Nov 25 08:01:05.100 qnx-target telemetryd[6010]: 5: Sensor sweep complete, 42 channels nominal
+Nov 25 08:01:15.220 qnx-target dashd[6020]: 5: Display refresh rate nominal
+Nov 25 08:01:25.330 qnx-target io-pkt-v6-hc[5100]: 5: DHCP lease renewed for emac0
+Nov 25 08:01:40.010 qnx-target devb-eide[4100]: 5: Filesystem check passed on /data
+Nov 25 08:01:55.900 qnx-target telemetryd[6010]: 6: Debug sample batch written, 128 samples
+Nov 25 08:02:06.110 qnx-target telemetryd[6010]: 5: Sensor sweep complete, 42 channels nominal
+Nov 25 08:02:18.200 qnx-target dashd[6020]: 5: User input received, page switch
+Nov 25 08:02:30.450 qnx-target ham[3300]: 6: Heartbeat check passed for all entities
+Nov 25 08:02:44.800 qnx-target io-pkt-v6-hc[5100]: 5: NTP sync complete, offset 3 ms
+Nov 25 08:02:58.010 qnx-target telemetryd[6010]: 3: Sensor channel 17 slow to respond, 240 ms
+Nov 25 08:03:07.120 qnx-target telemetryd[6010]: 5: Sensor sweep complete, 41 channels nominal
+Nov 25 08:03:19.300 qnx-target telemetryd[6010]: 3: Sensor channel 17 slow to respond, 310 ms
+Nov 25 08:03:26.540 qnx-target telemetryd[6010]: 1: telemetryd terminated: SIGSEGV (signal 11), fault address 0x00000000
+Nov 25 08:03:26.560 qnx-target dumper[2400]: 5: Core dump written to /var/dumps/telemetryd.core
+Nov 25 08:03:26.900 qnx-target ham[3300]: 3: ham: entity telemetryd condition failed, restarting process telemetryd
+Nov 25 08:03:27.400 qnx-target telemetryd[6112]: 5: telemetryd 2.4.1 started, attached to /dev/telemetry
+Nov 25 08:03:45.000 qnx-target dashd[6020]: 5: Display refresh rate nominal
+Nov 25 08:04:02.150 qnx-target dashd[6020]: 2: MsgSend to telemetryd failed: ESRCH (no such process), stale coid 1073741825
+Nov 25 08:04:02.300 qnx-target dashd[6020]: 2: MsgSend to telemetryd failed: ESRCH (no such process), stale coid 1073741825
+Nov 25 08:04:03.010 qnx-target dashd[6020]: 2: MsgSend to telemetryd failed: ESRCH (no such process), stale coid 1073741825
+Nov 25 08:04:03.500 qnx-target dashd[6020]: 3: Telemetry data stale, showing last known values
+Nov 25 08:04:20.000 qnx-target telemetryd[6112]: 5: Sensor sweep complete, 42 channels nominal
+Nov 25 08:04:41.220 qnx-target io-pkt-v6-hc[5100]: 5: NTP sync complete, offset 2 ms
+Nov 25 08:04:59.900 qnx-target ham[3300]: 6: Heartbeat check passed for all entities
+Nov 25 08:05:08.140 qnx-target telemetryd[6112]: 3: Sensor channel 17 slow to respond, 285 ms
+Nov 25 08:05:21.700 qnx-target devb-eide[4100]: 2: CAM error: ata command timeout on device 0, retry 1 of 3
+Nov 25 08:05:23.100 qnx-target devb-eide[4100]: 2: CAM error: ata command timeout on device 0, retry 2 of 3
+Nov 25 08:05:24.900 qnx-target devb-eide[4100]: 2: CAM error: device reset issued for device 0
+Nov 25 08:05:31.020 qnx-target telemetryd[6112]: 1: telemetryd terminated: SIGSEGV (signal 11), fault address 0x00000000
+Nov 25 08:05:31.300 qnx-target ham[3300]: 3: ham: entity telemetryd condition failed, restarting process telemetryd
+Nov 25 08:05:31.800 qnx-target telemetryd[6230]: 5: telemetryd 2.4.1 started, attached to /dev/telemetry
+Nov 25 08:05:50.000 qnx-target dashd[6020]: 5: Display refresh rate nominal
+Nov 25 08:06:01.010 qnx-target io-pkt-v6-hc[5100]: 3: io-pkt: link down on emac0
+Nov 25 08:06:01.400 qnx-target telemetryd[6230]: 3: Sensor read timeout on channel 3, retrying
+Nov 25 08:06:02.010 qnx-target io-pkt-v6-hc[5100]: 5: io-pkt: link up on emac0, 1000 Mbps full duplex
+Nov 25 08:06:02.500 qnx-target telemetryd[6230]: 3: Sensor read timeout on channel 5, retrying
+Nov 25 08:06:03.010 qnx-target io-pkt-v6-hc[5100]: 3: io-pkt: link down on emac0
+Nov 25 08:06:03.600 qnx-target dashd[6020]: 3: Telemetry data stale, showing last known values
+Nov 25 08:06:04.010 qnx-target io-pkt-v6-hc[5100]: 5: io-pkt: link up on emac0, 1000 Mbps full duplex
+Nov 25 08:06:04.700 qnx-target telemetryd[6230]: 2: Sensor read failed on channel 5, marking channel offline
+Nov 25 08:06:05.010 qnx-target io-pkt-v6-hc[5100]: 3: io-pkt: link down on emac0
+Nov 25 08:06:05.800 qnx-target telemetryd[6230]: 3: Sensor read timeout on channel 8, retrying
+Nov 25 08:06:06.010 qnx-target io-pkt-v6-hc[5100]: 5: io-pkt: link up on emac0, 1000 Mbps full duplex
+Nov 25 08:06:06.900 qnx-target dashd[6020]: 2: MsgSend to telemetryd failed: ESRCH (no such process), stale coid 1073741826
+Nov 25 08:06:07.010 qnx-target io-pkt-v6-hc[5100]: 3: io-pkt: link down on emac0
+Nov 25 08:06:07.500 qnx-target telemetryd[6230]: 3: Sensor read timeout on channel 3, retrying
+Nov 25 08:06:08.010 qnx-target io-pkt-v6-hc[5100]: 5: io-pkt: link up on emac0, 1000 Mbps full duplex
+Nov 25 08:06:08.800 qnx-target telemetryd[6230]: 2: Sensor read failed on channel 3, marking channel offline
+Nov 25 08:06:09.010 qnx-target io-pkt-v6-hc[5100]: 3: io-pkt: link down on emac0
+Nov 25 08:06:09.600 qnx-target dashd[6020]: 3: Telemetry data stale, showing last known values
+Nov 25 08:06:10.010 qnx-target io-pkt-v6-hc[5100]: 5: io-pkt: link up on emac0, 1000 Mbps full duplex
+Nov 25 08:06:11.200 qnx-target telemetryd[6230]: 3: Sensor read timeout on channel 12, retrying
+Nov 25 08:06:12.010 qnx-target io-pkt-v6-hc[5100]: 3: io-pkt: link down on emac0
+Nov 25 08:06:13.010 qnx-target io-pkt-v6-hc[5100]: 5: io-pkt: link up on emac0, 1000 Mbps full duplex
+Nov 25 08:06:14.500 qnx-target telemetryd[6230]: 3: Sensor read timeout on channel 17, retrying
+Nov 25 08:06:15.010 qnx-target io-pkt-v6-hc[5100]: 3: io-pkt: link down on emac0
+Nov 25 08:06:16.010 qnx-target io-pkt-v6-hc[5100]: 5: io-pkt: link up on emac0, 100 Mbps full duplex
+Nov 25 08:07:05.000 qnx-target telemetryd[6230]: 5: Sensor sweep complete, 39 channels nominal
+Nov 25 08:07:17.300 qnx-target dashd[6020]: 5: Display refresh rate nominal
+Nov 25 08:07:29.900 qnx-target io-pkt-v6-hc[5100]: 5: Link stable on emac0 for 60 seconds
+Nov 25 08:07:40.110 qnx-target ham[3300]: 6: Heartbeat check passed for all entities
+Nov 25 08:07:52.000 qnx-target devb-eide[4100]: 5: Filesystem check passed on /data
+Nov 25 08:07:58.500 qnx-target telemetryd[6230]: 3: Sensor channel 17 slow to respond, 260 ms
+Nov 25 08:08:09.210 qnx-target telemetryd[6230]: 1: telemetryd terminated: SIGSEGV (signal 11), fault address 0x00000000
+Nov 25 08:08:09.500 qnx-target ham[3300]: 3: ham: entity telemetryd condition failed, restarting process telemetryd
+Nov 25 08:08:10.000 qnx-target telemetryd[6311]: 5: telemetryd 2.4.1 started, attached to /dev/telemetry
+Nov 25 08:08:10.300 qnx-target dashd[6020]: 2: MsgSend to telemetryd failed: ESRCH (no such process), stale coid 1073741827
+Nov 25 08:08:10.600 qnx-target dashd[6020]: 2: MsgSend to telemetryd failed: ESRCH (no such process), stale coid 1073741827
+Nov 25 08:08:22.000 qnx-target dashd[6020]: 5: Display refresh rate nominal
+Nov 25 08:08:47.000 qnx-target telemetryd[6311]: 5: Sensor sweep complete, 42 channels nominal
+Nov 25 08:09:04.000 qnx-target telemetryd[6311]: 5: Sensor sweep complete, 42 channels nominal
+Nov 25 08:09:19.000 qnx-target dashd[6020]: 5: User input received, page switch
+Nov 25 08:09:33.000 qnx-target io-pkt-v6-hc[5100]: 5: NTP sync complete, offset 4 ms
+Nov 25 08:09:48.000 qnx-target ham[3300]: 6: Heartbeat check passed for all entities
+Nov 25 08:09:57.000 qnx-target telemetryd[6311]: 3: Sensor channel 17 slow to respond, 295 ms
+Nov 25 08:10:06.330 qnx-target telemetryd[6311]: 1: telemetryd terminated: SIGSEGV (signal 11), fault address 0x00000000
+Nov 25 08:10:06.600 qnx-target ham[3300]: 3: ham: entity telemetryd condition failed, restarting process telemetryd
+Nov 25 08:10:07.100 qnx-target telemetryd[6405]: 5: telemetryd 2.4.1 started, attached to /dev/telemetry
+Nov 25 08:10:15.000 qnx-target watchdog[2000]: 3: watchdog: no unexpected inactivity, system healthy
+Nov 25 08:10:26.000 qnx-target dashd[6020]: 5: Display refresh rate nominal
+Nov 25 08:10:38.000 qnx-target telemetryd[6405]: 5: Sensor sweep complete, 42 channels nominal
+Nov 25 08:10:49.000 qnx-target io-pkt-v6-hc[5100]: 5: NTP sync complete, offset 3 ms
+Nov 25 08:10:59.000 qnx-target ham[3300]: 6: Heartbeat check passed for all entities

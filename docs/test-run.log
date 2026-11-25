@@ -1,0 +1,108 @@
+=== Slog Doctor test + demo run — 2026-11-25 19:40 UTC ===
+
+--- tests/run_tests.py ---
+ok:   slog2 format auto-detected
+ok:   slog2 fixture parses >= 90 events
+ok:   slog2 fixture skips 0 lines
+ok:   analysis sees >= 14 problem events
+ok:   restart-loop finding present
+ok:   burst finding present
+ok:   ESRCH pattern finding present
+ok:   storage pattern finding present
+ok:   burst minute is 08:06
+ok:   top cluster is a problem cluster
+ok:   trace format auto-detected
+ok:   trace fixture parses >= 25 events
+ok:   trace process-destroy events flagged as problems
+ok:   signature normalizes numbers
+ok:   single slog2 line parses with pid+severity
+
+ALL 15 CHECKS PASSED
+
+--- CLI: slog2 crash-loop fixture (+ HTML/JSON outputs) ---
+====================================================================
+SLOG DOCTOR -- QNX log health report
+====================================================================
+  input: qnx-crashloop-slog2.txt  [slog2]  93 events parsed, 0 lines skipped
+  total events: 93   problems (severity <= ERROR): 15
+  window: 2026-11-25 08:00:01 .. 08:10:59
+
+Severity distribution:
+  CRITICAL  4
+  ERROR     11
+  WARNING   26
+  INFO      46
+  DEBUG     6
+
+Noisiest problem sources:
+  telemetryd               6 problem events
+  dashd                    6 problem events
+  devb-eide                3 problem events
+
+Findings (most important first):
+  1. [restart-loop] Restart loop: telemetryd crashed 4 times
+     telemetryd crashed 4 times in this log window. A supervisor such as the High Availability Manager (HAM) is restarting it, but the root cause is unfixed -- the system is running without this service for part of every cycle.
+     -> Next step: Treat the *first* crash of the process as the real bug and fix that crash; do not just tune the supervisor's restart policy -- that only hides the fault.
+  2. [burst] Event burst at 08:06
+     25 events in one minute vs an average of 8.5/min (3 of them errors). Bursts like this usually mark the moment a failure cascaded -- start the investigation at this timestamp.
+  3. [pattern] Message sent to a process that no longer exists (ESRCH) (x6)
+     In QNX native message passing, MsgSend() returned ESRCH: the destination process (or its channel) was gone when the client tried to send. Typically the server crashed or restarted and the client kept a stale connection id (coid).
+     -> Next step: Check whether the destination process crashed just before these errors (look for a crash cluster at the same timestamp). Clients should re-attach (name_open/ConnectAttach) when a server restarts instead of caching the coid forever.
+  4. [pattern] Storage (CAM/devb) error (x2)
+     The block driver stack (devb-* / CAM) reported a storage error: command timeouts, resets or media errors. Repeated errors point at failing media or a cabling/power problem rather than software.
+     -> Next step: Check the same device for escalating error counts, run the drive's SMART/health check, and plan media replacement if errors cluster on one device.
+
+Top error clusters (normalized signatures):
+  x6    [ERROR] MsgSend to telemetryd failed: ESRCH (no such process), stale coid #
+        Message sent to a process that no longer exists (ESRCH)
+  x4    [CRITICAL] telemetryd terminated: SIGSEGV (signal #), fault address #
+        Process crashed with a segmentation fault
+  x2    [ERROR] CAM error: ata command timeout on device #, retry # of #
+        Storage (CAM/devb) error
+  x2    [ERROR] Sensor read failed on channel #, marking channel offline
+  x1    [ERROR] CAM error: device reset issued for device #
+        Storage (CAM/devb) error
+
+HTML report written to docs/sample-report.html
+JSON summary written to docs/sample-report.json
+
+--- CLI: kernel trace fixture (via ./slogdoctor wrapper) ---
+====================================================================
+SLOG DOCTOR -- QNX log health report
+====================================================================
+  input: qnx-kernel-trace.txt  [trace]  32 events parsed, 8 lines skipped
+  total events: 32   problems (severity <= ERROR): 2
+
+Severity distribution:
+  ERROR     2
+
+Noisiest problem sources:
+  telemetryd               2 problem events
+
+Findings (most important first):
+  1. [crash] telemetryd crashed 2 time(s)
+     telemetryd terminated abnormally 2 time(s). QNX's microkernel isolates the fault, but the service is down until restarted.
+     -> Next step: Get a core dump (dumper) for the process and open it in the debugger; check the faulting address and the last release's changes in that component.
+
+Top error clusters (normalized signatures):
+  x2    [ERROR] PROCESS telemetryd DESTROYED (signal #)
+        Process crashed with a segmentation fault
+
+--- CLI: healthy (post-fix) fixture (via ./slogdoctor wrapper) ---
+====================================================================
+SLOG DOCTOR -- QNX log health report
+====================================================================
+  input: qnx-healthy-slog2.txt  [slog2]  35 events parsed, 0 lines skipped
+  total events: 35   problems (severity <= ERROR): 0
+  window: 2026-11-26 08:00:01 .. 08:10:59
+
+Severity distribution:
+  WARNING   1
+  INFO      29
+  DEBUG     5
+
+Findings (most important first):
+  1. [burst] Event burst at 08:00
+     10 events in one minute vs an average of 3.2/min (0 of them errors). Bursts like this usually mark the moment a failure cascaded -- start the investigation at this timestamp.
+
+Top error clusters (normalized signatures):
